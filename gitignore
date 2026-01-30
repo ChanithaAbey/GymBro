@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+.env/
+
+# Generated data and artifacts
+artifacts/
+exercise_keypoints/
+exercise_videos/
+test_videos/
+
+# Trained models
+*.pkl
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

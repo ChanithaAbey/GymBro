@@ -1,0 +1,16 @@
+# Core
+numpy
+pandas
+
+# Computer vision
+opencv-python
+mediapipe
+ultralytics
+
+# Machine learning
+scikit-learn
+xgboost
+joblib
+
+# Visualisation
+matplotlib
