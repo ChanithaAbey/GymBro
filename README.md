@@ -1,15 +1,15 @@
 # GymBro – Computer Vision Based Exercise Form Analysis System [![Google Drive](https://img.shields.io/badge/Google%20Drive-black?logo=google-drive)](https://drive.google.com/drive/folders/1Z8DeWwoG_3IULlUwUt1n7W0ZKEesfmnf?usp=sharing)
 
-GymBro is a computer vision based exercise form analysis and feedback system for strength training. The system currently focuses on bicep curls, where it uses pose estimation to track joint positions, evaluate movement patterns, and classify repetitions as correct or incorrect form. The system is also optimised for Google Colab to simplify setup and execution, while remaining fully compatible with local Python environments.
+GymBro is a computer vision based exercise form analysis and feedback system for strength training. The system currently focuses on bicep curls, where it uses pose estimation to track joint positions, evaluate movement patterns, and classify repetitions as correct or incorrect form with a full diagnosis. The system is also optimised for Google Colab to simplify setup and execution, while remaining fully compatible with local Python environments.
 
 It detects common issues such as elbow drift, incomplete range of motion, and poor movement control, while also identifying properly executed repetitions. The architecture is exercise-agnostic, allowing the same pipeline to be extended to other exercises by defining new movement rules or integrating learned classifiers.
 
----
+The final verdict combines a learned classifier with rule-based biomechanical checks, allowing high-confidence form issues to override the model when necessary.
 
 ## Key Capabilities
 
 - Joint-level pose tracking using computer vision
-- Per-repetition form evaluation for bicep curls
+- Repetition-aware motion analysis with exercise form evaluation for bicep curls
 - Detection of common form issues:
   - Trunk swing
   - Elbows forward
@@ -26,12 +26,25 @@ It detects common issues such as elbow drift, incomplete range of motion, and po
   - Out-of-sync arms
   - Speed bouncing
   - Constant lean
-- Human-readable feedback generation with direct and concise why, risks, and fix analysis
+
+- Detection of positive execution cues:
+  - Stable torso with minimal swing
+  - Upright posture with no backward lean
+  - Elbows staying close to the torso
+  - Elbows not drifting forward during the curl
+  - Full range of motion, reaching both bottom and top positions
+  - No leg drive, with hips remaining stable
+  - Square torso without rotational twisting
+  - Symmetrical movement between left and right arms
+  - Arms moving in sync with good timing
+  - Controlled tempo with no bouncing or rebounding
+- Human-readable feedback generation with concise explanations of:
+  - Why an issue occurred
+  - Potential risks
+  - How to fix it
 - Exercise-agnostic pipeline design for future extension
 - Generation of Labled Videos, CSV with all Data, and full JSON Report
 - **Optimised for Google Colab, with full support for local execution.**
-
----
 
 ## System Highlights
 
@@ -43,8 +56,6 @@ It detects common issues such as elbow drift, incomplete range of motion, and po
 - Optional learned classifiers for extensibility
 - Idempotent output handling for safe and stable re-runs
 
----
-
 ## How the System Works
 
 1. **Video Input**
@@ -52,7 +63,7 @@ It detects common issues such as elbow drift, incomplete range of motion, and po
    - Each clip contains a primary subject performing bicep curls
 
 2. **Pose Estimation**
-   - Pose keypoints are extracted using MediaPipe Pose and YOLOv8
+   - Pose keypoints are extracted using YOLOv8
    - Only the primary subject is tracked to avoid interference
 
 3. **Movement Analysis**
@@ -71,8 +82,6 @@ It detects common issues such as elbow drift, incomplete range of motion, and po
    - Keypoint features can be used to train ML models for extension
    - Trained models are saved for reuse and inference
 
----
-
 ## Folder Structure
 
 ```
@@ -84,7 +93,6 @@ It detects common issues such as elbow drift, incomplete range of motion, and po
 ├── test_videos/
 │
 ├── exercise_form.ipynb
-├── form_classifier_model.pkl
 ```
 
 ### Folder Overview
@@ -108,13 +116,11 @@ It detects common issues such as elbow drift, incomplete range of motion, and po
   Main notebook containing the full analysis pipeline
 
 - `form_classifier_model.pkl`  
-  Optional trained model for extended form evaluation
-
----
+  Model generated during training
 
 ## Setup
 
-### Option A – Google Colab (Recommended) 
+### Option A – Google Colab (Recommended)
 
 GymBro is optimized and primarily tested on Google Colab.  
 This is the simplest and most stable way to run the system.
@@ -125,18 +131,19 @@ This is the simplest and most stable way to run the system.
 
 1. Open the notebook in Colab:
 
-2. Mount Google Drive when prompted.
+2. If training, place your training videos inside **test_videos** folder
 
-3. If training, place your training videos inside **test_videos** folder
+3. Upload test video to test_videos
 
-4. Run the notebook cells **top to bottom**.
+4. Select t4 GPU runtime type.
 
-5. Upload a video to text_videos and enter video name when prompted.
+5. Run the notebook cells **top to bottom**.
+
+6. Mount Google Drive when prompted.
+
+7. Enter video name when prompted.
 
 No local installation is required. All dependencies are installed automatically.
-
-
----
 
 ### Option B – Local Python Environment
 
@@ -149,6 +156,7 @@ This requires manual dependency installation and environment management.
 - pip
 - Jupyter Notebook or JupyterLab
 - FFmpeg available in system PATH
+- FFmpeg is required for reliable video encoding when writing labeled output videos.
 
 ### 1. Clone the repository
 
@@ -217,8 +225,6 @@ GymBro/
 ├── exercise_labeled_videos/
 ```
 
-Create missing folders if required.
-
 ---
 
 ### 6. Run the notebook
@@ -236,12 +242,7 @@ Run all cells from top to bottom.
 - GPU acceleration is optional but not required for local execution.
 - Performance depends on CPU speed and video resolution.
 - Camera angle and lighting of training videos significantly affect pose detection quality.
-
-````
-
-> When running in Google Colab, dependency installation and environment handling are managed automatically inside the notebook.
-
----
+- When running in Google Colab, dependency installation and environment handling are managed automatically inside the notebook.
 
 ## Usage
 
@@ -249,7 +250,7 @@ Run all cells from top to bottom.
 
 ```bash
 jupyter notebook exercise_form.ipynb
-````
+```
 
 2. Run the cells in sequence to:
    - Extract pose keypoints
@@ -259,23 +260,18 @@ jupyter notebook exercise_form.ipynb
 
 3. Outputs are written safely and can be regenerated without conflicts.
 
----
-
 ## Tech Stack
 
-- Python
-- OpenCV
-- MediaPipe Pose
-- YOLOv8
-- XGBoost
-- scikit-learn
-- NumPy
-- Pandas
-- joblib
-- Google Colab
-- Jupyter Notebook
-
----
+- **Python** – Core language for the entire pipeline
+- **YOLOv8 Pose** – Real-time pose estimation and joint keypoint extraction
+- **OpenCV** – Video decoding, frame processing, and labeled output video generation
+- **NumPy** – Numerical operations on joint trajectories and motion signals
+- **Pandas** – Structured handling of per-video and per-metric data
+- **scikit-learn** – Feature processing and traditional ML utilities
+- **XGBoost** – Optional learned classifier for form quality prediction
+- **joblib** – Model serialization and reuse
+- **Google Colab** – Primary execution environment with GPU support
+- **Jupyter Notebook** – Interactive development, analysis, and experimentation
 
 ## Notes
 
@@ -283,7 +279,6 @@ jupyter notebook exercise_form.ipynb
 - Accuracy depends on camera angle, lighting, and subject visibility
 - Easily extensible to new exercises through rule definitions
 
----
-
 ## License
+
 MIT License | Copyright (c) 2026 Chanitha Disas Abeygunawardena
