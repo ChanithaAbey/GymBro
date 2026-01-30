@@ -1,4 +1,4 @@
-# GymBro – Computer Vision Based Exercise Form Analysis System
+# GymBro – Computer Vision Based Exercise Form Analysis System [![Google Drive](https://img.shields.io/badge/Google%20Drive-black?logo=google-drive)](https://drive.google.com/drive/folders/1Z8DeWwoG_3IULlUwUt1n7W0ZKEesfmnf?usp=sharing)
 
 GymBro is a computer vision based exercise form analysis and feedback system for strength training. The system currently focuses on bicep curls, where it uses pose estimation to track joint positions, evaluate movement patterns, and classify repetitions as correct or incorrect form. The system is also optimised for Google Colab to simplify setup and execution, while remaining fully compatible with local Python environments.
 
@@ -114,16 +114,16 @@ It detects common issues such as elbow drift, incomplete range of motion, and po
 
 ## Setup
 
-### Option A – Google Colab (Recommended)
+### Option A – Google Colab (Recommended) 
 
 GymBro is optimized and primarily tested on Google Colab.  
 This is the simplest and most stable way to run the system.
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/1HdUp-Pomo1WEeRMnDpObzptFvtBRKTip/view?usp=sharing)
+
 #### Steps
 
 1. Open the notebook in Colab:
-
-   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/1HdUp-Pomo1WEeRMnDpObzptFvtBRKTip/view?usp=sharing)
 
 2. Mount Google Drive when prompted.
 
@@ -131,14 +131,17 @@ This is the simplest and most stable way to run the system.
 
 4. Run the notebook cells **top to bottom**.
 
+5. Upload a video to text_videos and enter video name when prompted.
+
 No local installation is required. All dependencies are installed automatically.
+
+
+---
 
 ### Option B – Local Python Environment
 
 Local execution is supported for users who prefer running the notebook on their own machine.
 This requires manual dependency installation and environment management.
-
----
 
 ### Requirements
 
@@ -146,8 +149,6 @@ This requires manual dependency installation and environment management.
 - pip
 - Jupyter Notebook or JupyterLab
 - FFmpeg available in system PATH
-
----
 
 ### 1. Clone the repository
 
@@ -283,8 +284,3 @@ jupyter notebook exercise_form.ipynb
 - Easily extensible to new exercises through rule definitions
 
 ---
-
-## License
-
-MIT License  
-Copyright (c) 2026 Chanitha Abeygunawardena
