@@ -279,6 +279,40 @@ jupyter notebook exercise_form.ipynb
 - Accuracy depends on camera angle, lighting, and subject visibility
 - Easily extensible to new exercises through rule definitions
 
+## Example - Console Output
+
+```
+Enter File Name: TestBad.mov
+[ok] wrote TestBad_keypoints.csv and output_TestBad.mov
+
+Form Diagnosis
+Bad form  —  classifier=Bad, strong_issues=1
+
+Positive Points:
+ • Stable torso — minimal swing.
+ • Elbows don’t drift forward.
+ • Full range — reaches both bottom and top.
+ • Square torso — no twist.
+ • Good timing — arms move together.
+ • Controlled tempo — no bounce.
+
+Negative Points:
+ • asymmetric  (confidence 0.96)
+    Why This Happened:    One arm stronger or drifting more than the other.
+    Possible Side-Effects:  Imbalances and joint stress on the dominant side.
+    How to Fix:    Lighten the load and match the weaker side’s range.
+ • elbows flare  (confidence 0.66)
+    Why This Happened:    Letting upper arms drift out to the sides.
+    Possible Side-Effects:  Shoulder internal rotation stress and poor biceps line of pull.
+    How to Fix:    Squeeze a towel in your armpits or stand closer to a wall.
+ • shoulder shrug  (confidence 0.60)
+    Why This Happened:    Compensating with traps as the weight rises.
+    Possible Side-Effects:  Neck tightness and upper trap overuse.
+    How to Fix:    Keep shoulders down and back. Think pockets heavy.
+
+[ok] saved detailed report -> /content/drive/MyDrive/GymBro/artifacts/TestBad_report.json
+```
+
 ## License
 
 MIT License | Copyright (c) 2026 Chanitha Disas Abeygunawardena
