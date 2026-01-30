@@ -284,3 +284,6 @@ jupyter notebook exercise_form.ipynb
 - Easily extensible to new exercises through rule definitions
 
 ---
+
+## License
+MIT License | Copyright (c) 2026 Chanitha Disas Abeygunawardena
