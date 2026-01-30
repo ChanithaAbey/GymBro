@@ -123,7 +123,7 @@ This is the simplest and most stable way to run the system.
 
 1. Open the notebook in Colab:
 
-   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]([https://colab.research.google.com/github/USERNAME/REPO/blob/main/exercise_form.ipynb](https://drive.google.com/file/d/1HdUp-Pomo1WEeRMnDpObzptFvtBRKTip/view?usp=sharing))
+   [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://drive.google.com/file/d/1HdUp-Pomo1WEeRMnDpObzptFvtBRKTip/view?usp=sharing)
 
 2. Mount Google Drive when prompted.
 
